@@ -65,7 +65,7 @@ export default {
       type: Array,
       required: true
     },
-    // [[{parentId: '', value: '肉类', label: '肉类'}, {parentId: '', value: '蛋类', label: '蛋类'}], [{parentId: '肉类', value:'牛肉', label: '牛肉'}]]
+    // [[{value: '肉类', label: '肉类'}, {value: '蛋类', label: '蛋类'}], [{parentId: '肉类', value:'牛肉', label: '牛肉'}]]
     dynamicOptions: {
       type: Array
     },
@@ -82,6 +82,10 @@ export default {
   },
   watch: {
     options() {
+      this.setOptions()
+      this.setDefaultValue()
+    },
+    level() {
       this.setOptions()
       this.setDefaultValue()
     }
