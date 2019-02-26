@@ -187,9 +187,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.link-select {
-  width: 500px;
-}
-</style>
