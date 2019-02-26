@@ -6,6 +6,7 @@
           placeholder="请选择"
           @change="handleSelect($event, index)"
           :value="item"
+          :loading="index === loadingIndex"
         >
           <el-option
             v-for="inner in optionsList[index]"
@@ -36,6 +37,7 @@ export default {
   name: 'ElLinkSelect',
   data() {
     return {
+      loadingIndex: '',
       valueList: [], // 选项值列表
       optionsList: [] // 选项options列表
     }
@@ -62,10 +64,9 @@ export default {
      *
      */
     options: {
-      type: Array,
-      required: true
+      type: Array
     },
-    // [[{value: '肉类', label: '肉类'}, {value: '蛋类', label: '蛋类'}], [{parentId: '肉类', value:'牛肉', label: '牛肉'}]]
+    // [[{value: '肉类', label: '肉类'}, {value: '蛋类', label: '蛋类'}], [{value:'牛肉', label: '牛肉'}]]
     dynamicOptions: {
       type: Array
     },
@@ -88,11 +89,22 @@ export default {
     level() {
       this.setOptions()
       this.setDefaultValue()
+    },
+    dynamicOptions() {
+      if (!this.options) {
+        this.optionsList = lodashClone(this.dynamicOptions)
+      }
     }
   },
   created() {
-    this.setOptions()
-    this.setDefaultValue()
+    // 如果传的props中同时有options以及dynamicOptions 会优先取options
+    if (this.options) {
+      this.setOptions()
+      this.setDefaultValue()
+    } else {
+      this.optionsList = lodashClone(this.dynamicOptions)
+      this.setDefaultValue()
+    }
   },
   methods: {
     /**
@@ -129,6 +141,8 @@ export default {
       // 1、更改数组中的选中值
       // 2、更改子层级的选中值
       // 3、将子层级的所有的子置为默认选项
+      // 将下一个选择框值为loading
+      this.loadingIndex = index + 1
 
       const newArr = this.valueList.map(
         (item, i) => (i < index ? item : i === index ? val : null)
@@ -158,7 +172,11 @@ export default {
       this.$emit('input', newArr)
 
       // 进行事件回调
-      this.onChange(index, val, newArr)
+      const promiseChange = Promise.resolve(this.onChange(index, val, newArr))
+      promiseChange.then(() => {
+        // 重置加载状态
+        this.loadingIndex = ''
+      })
     },
     /**
      * 获取当前组件选中的值

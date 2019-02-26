@@ -10,11 +10,16 @@ import DefaultValue from './default-value.vue'
 import LevelValue from './level-value.vue'
 import ChangeEvent from './change-event.vue'
 import GetComponentValue from './get-component-value.vue'
+import DynamicOptions from './dynamic-options.vue'
 
 storiesOf('el-link-select', module)
   .add('基础用法（options, level）', () => ({
     template: `<Basic/>`,
     components: {Basic}
+  }))
+  .add('动态请求select数据（dynamicOptions）', () => ({
+    template: `<DynamicOptions/>`,
+    components: {DynamicOptions}
   }))
   .add('选择框数量设值(level)', () => ({
     template: `<LevelValue/>`,
