@@ -177,12 +177,6 @@ export default {
         // 重置加载状态
         this.loadingIndex = ''
       })
-    },
-    /**
-     * 获取当前组件选中的值
-     */
-    getValue() {
-      return this.valueList
     }
   }
 }

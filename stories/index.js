@@ -9,7 +9,6 @@ import Basic from './basic.vue'
 import DefaultValue from './default-value.vue'
 import LevelValue from './level-value.vue'
 import ChangeEvent from './change-event.vue'
-import GetComponentValue from './get-component-value.vue'
 import DynamicOptions from './dynamic-options.vue'
 
 storiesOf('el-link-select', module)
@@ -32,8 +31,4 @@ storiesOf('el-link-select', module)
   .add('更改选择框事件触发(onChange)', () => ({
     template: `<ChangeEvent/>`,
     components: {ChangeEvent}
-  }))
-  .add('获取组件当前选中值(getValue)', () => ({
-    template: `<GetComponentValue/>`,
-    components: {GetComponentValue}
   }))
